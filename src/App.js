@@ -69,7 +69,8 @@ class App extends Component {
 }
 
 function Body() {
-  const [history, setHistory] = useState([]);
+  const [list, setList] = useState([]);
+  const [histories, setHistories] = useState([]);
   useEffect(() => {
     const uid = firebase.auth().currentUser?.uid;
     const db = firebase.firestore();
@@ -77,24 +78,31 @@ function Body() {
 
     docRef.get().then((doc) => {
       if (doc.exists) {
-        setHistory(doc.data().point);
+        setHistories(doc.data().point);
       } else {
-        setHistory([]);
+        setHistories([]);
       }
     });
-  }, [setHistory]);
+  }, [setHistories]);
 
   return (
     <Container>
       <Row>
         <Col>
-          <div style={{ marginTop: "60px", width: "100%" }}>
-            <Box color="brown" bgcolor="beige" height="500px">
-              <p style={{ textAlignVertical: "center", textAlign: "center" }}>
-                whitelisted
+          <div style={{ marginTop: "70px", width: "100%" }}>
+            <Box color="#293136" bgcolor="beige" height="500px">
+              <p
+                style={{
+                  paddingTop: "15px",
+                  textAlignVertical: "center",
+                  textAlign: "center",
+                  fontSize: "20px"
+                }}
+              >
+                Whitelisted
               </p>
 
-              <Row>
+              <Row align="center">
                 <Col>
                   <Form.Control type="text" placeholder="Enter URL" />
                 </Col>
@@ -111,26 +119,61 @@ function Body() {
           <div className="App">
             <IfFirebaseAuthed>
               {({ user, firebase }) => (
-                <div className="App-title">Hi, {user.displayName}</div>
+                <div
+                  className="App-title"
+                  style={{ marginTop: "60px", fontSize: "20px" }}
+                >
+                  Hi, {user.displayName}
+                </div>
               )}
             </IfFirebaseAuthed>
+            <IfFirebaseUnAuthed>
+              <div
+                className="App-title"
+                style={{ marginTop: "60px", fontSize: "20px" }}
+              >
+                Welcome! Sign in to get started!
+              </div>
+            </IfFirebaseUnAuthed>
             <div className="Timers">
               <Countdown />
             </div>
           </div>
         </Col>
         <Col>
-          <div style={{ marginTop: "60px", width: "100%" }}>
-            <Box align="center" color="brown" bgcolor="beige" height="500px">
-              <p>history</p>
-              <table style={{ margin: "0 auto", width: "90%" }}>
+          <div style={{ marginTop: "70px", width: "100%" }}>
+            <Box align="center" color="#293136" bgcolor="beige" height="500px">
+              <p
+                style={{
+                  paddingTop: "15px",
+                  textAlignVertical: "center",
+                  textAlign: "center",
+                  fontSize: "20px"
+                }}
+              >
+                History
+              </p>
+              <table
+                style={{ margin: "0 auto", width: "100%", textAlign: "center" }}
+              >
                 <thead>
                   <tr>
                     <th>Date</th>
-                    <th>DUR</th>
-                    <th>Status</th>
+                    <th>Dur</th>
+                    <th>Stat</th>
                   </tr>
                 </thead>
+                <tbody>
+                  {histories.map((history, index) => (
+                    <tr>
+                      <td>{history.date}</td>
+                      <td>{history.dur}</td>
+                      <td>
+                        {history.state ? <p>Completed</p> : <p>Failed</p>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             </Box>
           </div>
