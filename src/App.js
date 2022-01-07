@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-//import './App.css';
+import style from './App.css';
 import {
   FirebaseAuthConsumer,
   IfFirebaseAuthed,
@@ -13,13 +13,17 @@ function App() {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(googleAuthProvider);
   };
+  const handleLogout = (firebase) => {
+    firebase.auth().signOut();
+  };
   return (
     <div>
       <FirebaseAuthConsumer>
-        <IfFirebaseAuthed></IfFirebaseAuthed>
         <IfFirebaseUnAuthed>
           {({ firebase }) => (
             <Button
+              className = {style.button}
+              color = "primary"
               variant="outlined"
               onClick={() => handleGoogleSignIn(firebase)}
             >
@@ -27,9 +31,24 @@ function App() {
             </Button>
           )}
         </IfFirebaseUnAuthed>
+        <IfFirebaseAuthed>
+        {({ user, firebase }) => (
+              <Button
+               className = {style.button}
+                variant = "outlined"
+                color = "primary"
+                onClick={() => {
+                  handleLogout(firebase)
+                }}
+              >
+                Log out
+              </Button>
+          )}
+        </IfFirebaseAuthed>
       </FirebaseAuthConsumer>
     </div>
   );
 }
 
 export default App;
+
