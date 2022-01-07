@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
+import React, { Component } from "react";
 
-import Toast from 'react-bootstrap/Toast';
+import Countdown from "./Countdown";
+
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
 
 import './App.css';
 
-const ExampleToast = ({ children }) => {
-  const [show, toggleShow] = useState(true);
+class App extends Component {
+  render() {
+    return (
+      <Container>
 
-  return (
-    <>
-      {!show && <Button onClick={() => toggleShow(true)}>Show Toast</Button>}
-      <Toast show={show} onClose={() => toggleShow(false)}>
-        <Toast.Header>
-          <strong className="mr-auto">React-Bootstrap</strong>
-        </Toast.Header>
-        <Toast.Body>{children}</Toast.Body>
-      </Toast>
-    </>
-  );
-};
-
-const App = () => (
-  <Container className="p-3">
-    <Container className="p-5 mb-4 bg-light rounded-3">
-      <h1 className="header">Welcome To React-Bootstrap</h1>
-      <ExampleToast>
-        We now have Toasts
-        <span role="img" aria-label="tada">
-          🎉
-        </span>
-      </ExampleToast>
-    </Container>
-  </Container>
-);
+          <Navbar bg="primary" variant="dark">
+            <Navbar.Brand >focus-app</Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                Signed in as: <a href="#login">user</a>
+              </Navbar.Text>
+            </Navbar.Collapse>
+          </Navbar>
+        <div className="App">
+          <div className="App-title">Hi, username</div>
+          <div className="Timers">
+            <Countdown />
+          </div>
+        </div>
+      
+      </Container>  
+  
+    );
+  }
+}
 
 export default App;
