@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button } from "@material-ui/core"
+//import './App.css';
+import {
+  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+  IfFirebaseUnAuthed
+} from "@react-firebase/auth";
+//import { firebase } from "@firebase/app";
+//import "@firebase/firestore";
 
 function App() {
+  const handleGoogleSignIn = (firebase) => {
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(googleAuthProvider);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <FirebaseAuthConsumer>
+        <IfFirebaseAuthed>
+        </IfFirebaseAuthed>
+        <IfFirebaseUnAuthed>
+            {({ firebase }) => (
+              <Button
+                variant="outlined"
+                onClick={() => handleGoogleSignIn(firebase)}
+              >
+                Sign in with Google
+              </Button>
+            )}
+        </IfFirebaseUnAuthed>
+      </FirebaseAuthConsumer>
     </div>
   );
 }
