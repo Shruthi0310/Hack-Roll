@@ -6,7 +6,7 @@ class Countdown extends Component {
   state = {
     timerOn: false,
     timerStart: 0,
-    timerTime: 0
+    timerTime: 300000
   };
 
   startTimer = () => {
