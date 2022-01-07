@@ -3,27 +3,30 @@ import "./App.css";
 import Button from "react-bootstrap/Button";
 
 class Countdown extends Component {
+
   state = {
     timerOn: false,
     timerStart: 0,
-    timerTime: 300000
+    timerTime: 300000, 
+    endTime: new Date(Date.now() + 300000)
   };
-
   startTimer = () => {
     this.setState({
       timerOn: true,
       timerTime: this.state.timerTime,
-      timerStart: this.state.timerTime
+      timerStart: this.state.timerTime,
+      endTime:  new Date(Date.now() + this.state.timerTime)
     });
     this.timer = setInterval(() => {
-      const newTime = this.state.timerTime - 10;
-      if (newTime >= 0) {
+      const newTime = (new Date(this.state.endTime - Date.now())).getTime();
+      if (newTime >= 0 && (new Date()) < this.state.endTime) {
         this.setState({
           timerTime: newTime
         });
       } else {
         clearInterval(this.timer);
-        this.setState({ timerOn: false });
+        this.setState({ timerOn: false,
+          timerTime: 0});
         alert("Good job");
       }
     }, 10);
@@ -35,7 +38,7 @@ class Countdown extends Component {
 
     this.setState({
       timerOn: false,
-      timerTime: this.state.timerStart
+      timerTime: 300000
     });
   };
 
@@ -123,10 +126,8 @@ class Countdown extends Component {
           </Button>
         </div>
         <br></br>
-        {timerOn === false && (timerStart === 0 || timerTime === timerStart) && (
-          <Button variant="dark" size='lg' onClick={this.startTimer}>
-            Start
-          </Button>
+        {timerOn === false  && (
+        <Button variant="dark" size='lg' onClick={this.startTimer} >Start</Button>
         )}
         {timerOn === true && timerTime >= 1000 && (
           <Button variant="dark" size='lg' onClick={this.stopTimer}>
