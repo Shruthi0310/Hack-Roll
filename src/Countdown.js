@@ -3,30 +3,49 @@ import "./App.css";
 import Button from "react-bootstrap/Button";
 
 class Countdown extends Component {
-
   state = {
+    dur: "",
+    date: "",
     timerOn: false,
     timerStart: 0,
-    timerTime: 300000, 
+    timerTime: 300000,
     endTime: new Date(Date.now() + 300000)
   };
   startTimer = () => {
+    const current = new Date();
     this.setState({
+      dur:
+        ("0" + Math.floor((this.state.timerTime / 3600000) % 60)).slice(-2) +
+        ":" +
+        ("0" + Math.floor((this.state.timerTime / 60000) % 60)).slice(-2) +
+        ":" +
+        ("0" + (Math.floor((this.state.timerTime / 1000) % 60) % 60)).slice(-2),
+      date: `${current.getDate()}/${
+        current.getMonth() + 1
+      }/${current.getFullYear()}`,
       timerOn: true,
       timerTime: this.state.timerTime,
       timerStart: this.state.timerTime,
-      endTime:  new Date(Date.now() + this.state.timerTime)
+      endTime: new Date(Date.now() + this.state.timerTime)
     });
     this.timer = setInterval(() => {
-      const newTime = (new Date(this.state.endTime - Date.now())).getTime();
-      if (newTime >= 0 && (new Date()) < this.state.endTime) {
+      const newTime = new Date(this.state.endTime - Date.now()).getTime();
+      if (newTime >= 0 && new Date() < this.state.endTime) {
         this.setState({
           timerTime: newTime
         });
       } else {
         clearInterval(this.timer);
-        this.setState({ timerOn: false,
-          timerTime: 0});
+        this.props.setHistories([
+          ...this.props.histories,
+          {
+            date: this.state.date,
+            dur: this.state.dur,
+            stat: "Completed"
+          }
+        ]);
+        console.log(this.props.histories);
+        this.setState({ timerOn: false, timerTime: 0 });
         alert("Good job");
       }
     }, 10);
@@ -40,6 +59,15 @@ class Countdown extends Component {
       timerOn: false,
       timerTime: 300000
     });
+
+    this.props.setHistories([
+      ...this.props.histories,
+      {
+        date: this.state.date,
+        dur: this.state.dur,
+        stat: "Failed"
+      }
+    ]);
   };
 
   adjustTimer = (input) => {
@@ -126,11 +154,13 @@ class Countdown extends Component {
           </Button>
         </div>
         <br></br>
-        {timerOn === false  && (
-        <Button variant="dark" size='lg' onClick={this.startTimer} >Start</Button>
+        {timerOn === false && (
+          <Button variant="dark" size="lg" onClick={this.startTimer}>
+            Start
+          </Button>
         )}
         {timerOn === true && timerTime >= 1000 && (
-          <Button variant="dark" size='lg' onClick={this.stopTimer}>
+          <Button variant="dark" size="lg" onClick={this.stopTimer}>
             Stop
           </Button>
         )}

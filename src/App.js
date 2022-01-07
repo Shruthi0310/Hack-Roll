@@ -71,7 +71,7 @@ class App extends Component {
 function Body() {
   const [list, setList] = useState([]);
   const [histories, setHistories] = useState([]);
-  useEffect(() => {
+  /*useEffect(() => {
     const uid = firebase.auth().currentUser?.uid;
     const db = firebase.firestore();
     const docRef = db.collection("/history").doc(uid);
@@ -83,7 +83,7 @@ function Body() {
         setHistories([]);
       }
     });
-  }, [setHistories]);
+  }, [setHistories]);*/
 
   return (
     <Container>
@@ -103,11 +103,17 @@ function Body() {
               </p>
 
               <Row align="center">
-                <Col xs='9'>
-                  <Form.Control type="text" placeholder="Enter URL" className='whitelist' />
+                <Col xs="9">
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter URL"
+                    className="whitelist"
+                  />
                 </Col>
-                <Col xs='3' align='center'>
-                  <Button variant="dark" className='whitelist'>Add</Button>
+                <Col xs="3" align="center">
+                  <Button variant="dark" className="whitelist">
+                    Add
+                  </Button>
                 </Col>
               </Row>
 
@@ -136,7 +142,7 @@ function Body() {
               </div>
             </IfFirebaseUnAuthed>
             <div className="Timers">
-              <Countdown />
+              <Countdown setHistories={setHistories} histories={histories} />
             </div>
           </div>
         </Col>
@@ -168,9 +174,7 @@ function Body() {
                     <tr>
                       <td>{history.date}</td>
                       <td>{history.dur}</td>
-                      <td>
-                        {history.state ? <p>Completed</p> : <p>Failed</p>}
-                      </td>
+                      <td>{history.stat}</td>
                     </tr>
                   ))}
                 </tbody>
