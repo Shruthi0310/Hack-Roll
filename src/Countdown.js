@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 class Countdown extends Component {
   state = {
@@ -33,14 +33,13 @@ class Countdown extends Component {
     clearInterval(this.timer);
     alert("Boo u loser");
 
-    this.setState({ 
+    this.setState({
       timerOn: false,
       timerTime: this.state.timerStart
     });
   };
 
-
-  adjustTimer = input => {
+  adjustTimer = (input) => {
     const { timerTime, timerOn } = this.state;
     if (!timerOn) {
       if (input === "incHours" && timerTime + 3600000 < 216000000) {
@@ -66,28 +65,67 @@ class Countdown extends Component {
     let hours = ("0" + Math.floor((timerTime / 3600000) % 60)).slice(-2);
 
     return (
-      
       <div className="Countdown">
         <br></br>
         <div className="Countdown-label">Hours : Minutes : Seconds</div>
         <div className="Countdown-display">
-        <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("incHours")}>&#8679;</Button>
-        <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("incMinutes")}>&#8679;</Button>
-        <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("incSeconds")}>&#8679;</Button>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => this.adjustTimer("incHours")}
+          >
+            &#8679;
+          </Button>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => this.adjustTimer("incMinutes")}
+          >
+            &#8679;
+          </Button>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => this.adjustTimer("incSeconds")}
+          >
+            &#8679;
+          </Button>
 
           <div className="Countdown-time">
             {hours} : {minutes} : {seconds}
           </div>
-          <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("decHours")}>&#8681;</Button>
-          <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("decMinutes")}>&#8681;</Button>
-          <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("decSeconds")}>&#8681;</Button>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => this.adjustTimer("decHours")}
+          >
+            &#8681;
+          </Button>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => this.adjustTimer("decMinutes")}
+          >
+            &#8681;
+          </Button>
+          <Button
+            variant="outline-dark"
+            size="sm"
+            onClick={() => this.adjustTimer("decSeconds")}
+          >
+            &#8681;
+          </Button>
         </div>
         <br></br>
         {timerOn === false && (timerStart === 0 || timerTime === timerStart) && (
-        <Button variant="dark" onClick={this.startTimer} >Start</Button>
+          <Button variant="dark" onClick={this.startTimer}>
+            Start
+          </Button>
         )}
         {timerOn === true && timerTime >= 1000 && (
-          <Button variant="dark" onClick={this.stopTimer} >Stop</Button>
+          <Button variant="dark" onClick={this.stopTimer}>
+            Stop
+          </Button>
         )}
       </div>
     );
@@ -95,4 +133,3 @@ class Countdown extends Component {
 }
 
 export default Countdown;
-
