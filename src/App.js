@@ -1,5 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
+import { Avatar } from "@material-ui/core";
 import Countdown from "./Countdown";
+import { firebase } from "@firebase/app";
+import "@firebase/firestore";
 
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -24,11 +27,12 @@ class App extends Component {
     const handleLogout = (firebase) => {
       firebase.auth().signOut();
     };
+
     return (
       <div>
         <Navbar className="justify-content-center" bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand>focus-app</Navbar.Brand>
+            <Navbar.Brand>Focus-app</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
               <IfFirebaseUnAuthed>
@@ -43,63 +47,140 @@ class App extends Component {
               </IfFirebaseUnAuthed>
               <IfFirebaseAuthed>
                 {({ user, firebase }) => (
-                  <Button
-                    variant="light"
-                    onClick={() => {
-                      handleLogout(firebase);
-                    }}
-                  >
-                    Log out
-                  </Button>
+                  <div>
+                    <Button
+                      variant="light"
+                      onClick={() => {
+                        handleLogout(firebase);
+                      }}
+                    >
+                      Log out
+                    </Button>
+                  </div>
                 )}
               </IfFirebaseAuthed>
             </Navbar.Collapse>
           </Container>
         </Navbar>
-        <Container>
-          <Row>
-            <Col>
-              <div style={{ marginTop: "60px", width: "100%" }}>
-                <Box color="brown" bgcolor="beige" height="500px">
-                  <p
-                    style={{ textAlignVertical: "center", textAlign: "center" }}
-                  >
-                    whitelisted
-                  </p>
-
-                  <Row>
-                    <Col>
-                      <Form.Control type="text" placeholder="Enter URL" />
-                    </Col>
-                    <Col>
-                      <Button variant="dark">Add</Button>
-                    </Col>
-                  </Row>
-
-                  <br />
-                </Box>
-              </div>
-            </Col>
-            <Col>
-              <div className="App">
-                <div className="App-title">Hi, username</div>
-                <div className="Timers">
-                  <Countdown />
-                </div>
-              </div>
-            </Col>
-            <Col>
-              <div style={{ marginTop: "60px", width: "100%" }}>
-                <Box color="brown" bgcolor="beige" height="500px">
-                  history
-                </Box>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+        <Body />
       </div>
     );
   }
+}
+
+function Body() {
+  const [list, setList] = useState([]);
+  const [histories, setHistories] = useState([]);
+  useEffect(() => {
+    const uid = firebase.auth().currentUser?.uid;
+    const db = firebase.firestore();
+    const docRef = db.collection("/history").doc(uid);
+
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        setHistories(doc.data().point);
+      } else {
+        setHistories([]);
+      }
+    });
+  }, [setHistories]);
+
+  return (
+    <Container>
+      <Row>
+        <Col>
+          <div style={{ marginTop: "70px", width: "100%" }}>
+            <Box color="#293136" bgcolor="beige" height="500px">
+              <p
+                style={{
+                  paddingTop: "15px",
+                  textAlignVertical: "center",
+                  textAlign: "center",
+                  fontSize: "20px"
+                }}
+              >
+                Whitelisted
+              </p>
+
+              <Row align="center">
+                <Col>
+                  <Form.Control type="text" placeholder="Enter URL" />
+                </Col>
+                <Col>
+                  <Button variant="dark">Add</Button>
+                </Col>
+              </Row>
+
+              <br />
+            </Box>
+          </div>
+        </Col>
+        <Col>
+          <div className="App">
+            <IfFirebaseAuthed>
+              {({ user, firebase }) => (
+                <div
+                  className="App-title"
+                  style={{ marginTop: "60px", fontSize: "20px" }}
+                >
+                  Hi, {user.displayName}
+                </div>
+              )}
+            </IfFirebaseAuthed>
+            <IfFirebaseUnAuthed>
+              <div
+                className="App-title"
+                style={{ marginTop: "60px", fontSize: "20px" }}
+              >
+                Welcome! Sign in to get started!
+              </div>
+            </IfFirebaseUnAuthed>
+            <div className="Timers">
+              <Countdown />
+            </div>
+          </div>
+        </Col>
+        <Col>
+          <div style={{ marginTop: "70px", width: "100%" }}>
+            <Box align="center" color="#293136" bgcolor="beige" height="500px">
+              <p
+                style={{
+                  paddingTop: "15px",
+                  textAlignVertical: "center",
+                  textAlign: "center",
+                  fontSize: "20px"
+                }}
+              >
+                History
+              </p>
+              <table
+                style={{ margin: "0 auto", width: "100%", textAlign: "center" }}
+              >
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Dur</th>
+                    <th>Stat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {histories.map((history, index) => (
+                    <tr>
+                      <td>{history.date}</td>
+                      <td>{history.dur}</td>
+                      <td>
+                        {history.state ? <p>Completed</p> : <p>Failed</p>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Box>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
 
 export default App;

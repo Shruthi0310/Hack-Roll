@@ -7,6 +7,10 @@
   pointer-events: none;
 }
 
+.App-title {
+  margin-top: 20px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -36,12 +40,11 @@
     transform: rotate(360deg);
   }
 }
-@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap");
 div {
-  font-family: 'Bree Serif', serif;
+  font-family: "Bree Serif", serif;
 }
 
 :root {
   --beige: #0000ff;
-  
 }
