@@ -70,22 +70,25 @@ class Countdown extends Component {
         <div className="Countdown-label">Hours : Minutes : Seconds</div>
         <div className="Countdown-display">
           <Button
-            variant="outline-dark"
+            variant="light"
             size="sm"
+            className="Countdown-button"
             onClick={() => this.adjustTimer("incHours")}
           >
             &#8679;
           </Button>
           <Button
-            variant="outline-dark"
+            variant="light"
             size="sm"
+            className="Countdown-button"
             onClick={() => this.adjustTimer("incMinutes")}
           >
             &#8679;
           </Button>
           <Button
-            variant="outline-dark"
+            variant="light"
             size="sm"
+            className="Countdown-button"
             onClick={() => this.adjustTimer("incSeconds")}
           >
             &#8679;
@@ -95,22 +98,25 @@ class Countdown extends Component {
             {hours} : {minutes} : {seconds}
           </div>
           <Button
-            variant="outline-dark"
+            variant="light"
             size="sm"
+            className="Countdown-button"
             onClick={() => this.adjustTimer("decHours")}
           >
             &#8681;
           </Button>
           <Button
-            variant="outline-dark"
+            variant="light"
             size="sm"
+            className="Countdown-button"
             onClick={() => this.adjustTimer("decMinutes")}
           >
             &#8681;
           </Button>
           <Button
-            variant="outline-dark"
+            variant="light"
             size="sm"
+            className="Countdown-button"
             onClick={() => this.adjustTimer("decSeconds")}
           >
             &#8681;
@@ -118,12 +124,12 @@ class Countdown extends Component {
         </div>
         <br></br>
         {timerOn === false && (timerStart === 0 || timerTime === timerStart) && (
-          <Button variant="dark" onClick={this.startTimer}>
+          <Button variant="dark" size='lg' onClick={this.startTimer}>
             Start
           </Button>
         )}
         {timerOn === true && timerTime >= 1000 && (
-          <Button variant="dark" onClick={this.stopTimer}>
+          <Button variant="dark" size='lg' onClick={this.stopTimer}>
             Stop
           </Button>
         )}

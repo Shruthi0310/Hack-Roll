@@ -103,11 +103,11 @@ function Body() {
               </p>
 
               <Row align="center">
-                <Col>
-                  <Form.Control type="text" placeholder="Enter URL" />
+                <Col xs='9'>
+                  <Form.Control type="text" placeholder="Enter URL" className='whitelist' />
                 </Col>
-                <Col>
-                  <Button variant="dark">Add</Button>
+                <Col xs='3' align='center'>
+                  <Button variant="dark" className='whitelist'>Add</Button>
                 </Col>
               </Row>
 
