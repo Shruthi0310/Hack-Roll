@@ -7,6 +7,6 @@ const getHTML = () => {
     )
 }
 
-if (whitelistWebsites.includes(window.location.hostname)) {
+if (!whitelistWebsites.includes(window.location.hostname)) {
         document.body.innerHTML = getHTML();
 }
