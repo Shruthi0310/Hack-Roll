@@ -69,7 +69,9 @@ class App extends Component {
 }
 
 function Body() {
-  const [list, setList] = useState([]);
+  var list = [];
+  const [websites, setWebsites] = useState([]);
+  const [url, setUrl] = useState("");
   const [histories, setHistories] = useState([]);
   useEffect(() => {
     const uid = firebase.auth().currentUser?.uid;
@@ -83,14 +85,24 @@ function Body() {
         setHistories([]);
       }
     });
+
+    const urlRef = db.collection("vNrxeTt1MeR6iDqLgP9cKfi2C9y2");
+    urlRef.get().then((doc) => {
+     doc.forEach(x => {list.push(x.id) 
+    })
+     setWebsites(list);
+    });
+    
+
   }, [setHistories]);
+
 
   return (
     <Container>
       <Row>
         <Col>
           <div style={{ marginTop: "70px", width: "100%" }}>
-            <Box color="#293136" bgcolor="beige" height="500px">
+            <Box color="#293136" bgcolor="beige" height="500px" width="300px">
               <p
                 style={{
                   paddingTop: "15px",
@@ -99,17 +111,48 @@ function Body() {
                   fontSize: "20px"
                 }}
               >
-                Whitelisted
+                Blacklisted
               </p>
 
               <Row align="center">
                 <Col>
-                  <Form.Control type="text" placeholder="Enter URL" />
+                  <Form.Control type="text" placeholder="Enter URL" 
+                  onChange={e => setUrl(e.target.value)}/>
                 </Col>
                 <Col>
-                  <Button variant="dark">Add</Button>
+                  <Button variant="dark" onClick={()=> {
+                    const uid = firebase.auth().currentUser?.uid;
+                    const db = firebase.firestore();
+                    const docRef = db.collection(uid).doc(url).set({}).then(() => {
+                      window.location.reload(false);
+                    });
+                    
+                  }}>Add</Button>
                 </Col>
               </Row>
+              <br></br>
+              <ul>
+              {websites.map((url) => {
+                return (
+                  <Row align="left">
+                <Col>
+                <p>{url}</p>
+                </Col>
+                <Col>
+                  <Button style={{backgroundColor: "red"}} onClick={()=> {
+                    const uid = firebase.auth().currentUser?.uid;
+                    const db = firebase.firestore();
+                    const docRef = db.collection(uid).doc(url).delete().then(() => {
+                      window.location.reload(false);
+                    });
+                    
+                  }}>remove</Button>
+                </Col>
+              </Row>
+                
+                )
+              })}
+             </ul>
 
               <br />
             </Box>
