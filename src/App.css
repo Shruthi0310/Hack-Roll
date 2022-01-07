@@ -32,6 +32,25 @@
   color: #61dafb;
 }
 
+.Countdown-label {
+  color: #868686;
+}
+
+.whitelist {
+  margin: 0 10px 0 10px;
+}
+
+.Countdown-time {
+  font-size: 50px;
+  color: #282c34;
+  background: #f5f5dc;
+  margin: 10px 10px 10px 10px;
+}
+
+.Countdown-button {
+  margin: 0px 5px 0px 5px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
