@@ -71,23 +71,23 @@ class Countdown extends Component {
         <br></br>
         <div className="Countdown-label">Hours : Minutes : Seconds</div>
         <div className="Countdown-display">
-        <Button variant="outline-primary" size="sm" onClick={() => this.adjustTimer("incHours")}>&#8679;</Button>
-        <Button variant="outline-primary" size="sm" onClick={() => this.adjustTimer("incMinutes")}>&#8679;</Button>
-        <Button variant="outline-primary" size="sm" onClick={() => this.adjustTimer("incSeconds")}>&#8679;</Button>
+        <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("incHours")}>&#8679;</Button>
+        <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("incMinutes")}>&#8679;</Button>
+        <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("incSeconds")}>&#8679;</Button>
 
           <div className="Countdown-time">
             {hours} : {minutes} : {seconds}
           </div>
-          <Button variant="outline-primary" size="sm" onClick={() => this.adjustTimer("decHours")}>&#8681;</Button>
-          <Button variant="outline-primary" size="sm" onClick={() => this.adjustTimer("decMinutes")}>&#8681;</Button>
-          <Button variant="outline-primary" size="sm" onClick={() => this.adjustTimer("decSeconds")}>&#8681;</Button>
+          <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("decHours")}>&#8681;</Button>
+          <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("decMinutes")}>&#8681;</Button>
+          <Button variant="outline-dark" size="sm" onClick={() => this.adjustTimer("decSeconds")}>&#8681;</Button>
         </div>
         <br></br>
         {timerOn === false && (timerStart === 0 || timerTime === timerStart) && (
-        <Button variant="primary" onClick={this.startTimer} >Start</Button>
+        <Button variant="dark" onClick={this.startTimer} >Start</Button>
         )}
         {timerOn === true && timerTime >= 1000 && (
-          <Button variant="primary" onClick={this.stopTimer} >Stop</Button>
+          <Button variant="dark" onClick={this.stopTimer} >Stop</Button>
         )}
       </div>
     );

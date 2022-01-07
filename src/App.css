@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+div {
+  font-family: 'Bree Serif', serif;
+}
+
+:root {
+  --beige: #0000ff;
+  
+}
