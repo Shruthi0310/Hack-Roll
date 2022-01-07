@@ -94,6 +94,7 @@ function Body() {
     });
     
 
+    console.log(histories);
   }, [setHistories]);
 
 
@@ -128,7 +129,7 @@ function Body() {
                     });
                     
                   }}>Add</Button>
-                </Col>
+               </Col>
               </Row>
               <br></br>
               <ul>
@@ -179,7 +180,7 @@ function Body() {
               </div>
             </IfFirebaseUnAuthed>
             <div className="Timers">
-              <Countdown />
+              <Countdown setHistories={setHistories} histories={histories} />
             </div>
           </div>
         </Col>
@@ -197,7 +198,11 @@ function Body() {
                 History
               </p>
               <table
-                style={{ margin: "0 auto", width: "100%", textAlign: "center" }}
+                style={{
+                  margin: "0 auto",
+                  width: "100%",
+                  textAlign: "center"
+                }}
               >
                 <thead>
                   <tr>
@@ -207,15 +212,17 @@ function Body() {
                   </tr>
                 </thead>
                 <tbody>
-                  {histories.map((history, index) => (
-                    <tr>
-                      <td>{history.date}</td>
-                      <td>{history.dur}</td>
-                      <td>
-                        {history.state ? <p>Completed</p> : <p>Failed</p>}
-                      </td>
-                    </tr>
-                  ))}
+                  {histories === [] ? (
+                    <div></div>
+                  ) : (
+                    histories.map((history, index) => (
+                      <tr>
+                        <td>{history.date}</td>
+                        <td>{history.dur}</td>
+                        <td>{history.stat}</td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </Box>
