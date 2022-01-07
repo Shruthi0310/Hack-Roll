@@ -71,7 +71,7 @@ class App extends Component {
 function Body() {
   const [list, setList] = useState([]);
   const [histories, setHistories] = useState([]);
-  /*useEffect(() => {
+  useEffect(() => {
     const uid = firebase.auth().currentUser?.uid;
     const db = firebase.firestore();
     const docRef = db.collection("/history").doc(uid);
@@ -83,7 +83,8 @@ function Body() {
         setHistories([]);
       }
     });
-  }, [setHistories]);*/
+    console.log(histories);
+  }, [setHistories]);
 
   return (
     <Container>
@@ -160,7 +161,11 @@ function Body() {
                 History
               </p>
               <table
-                style={{ margin: "0 auto", width: "100%", textAlign: "center" }}
+                style={{
+                  margin: "0 auto",
+                  width: "100%",
+                  textAlign: "center"
+                }}
               >
                 <thead>
                   <tr>
@@ -170,13 +175,17 @@ function Body() {
                   </tr>
                 </thead>
                 <tbody>
-                  {histories.map((history, index) => (
-                    <tr>
-                      <td>{history.date}</td>
-                      <td>{history.dur}</td>
-                      <td>{history.stat}</td>
-                    </tr>
-                  ))}
+                  {histories === [] ? (
+                    <div></div>
+                  ) : (
+                    histories.map((history, index) => (
+                      <tr>
+                        <td>{history.date}</td>
+                        <td>{history.dur}</td>
+                        <td>{history.stat}</td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </Box>

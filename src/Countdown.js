@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
+import { firebase } from "@firebase/app";
+import "@firebase/firestore";
 import Button from "react-bootstrap/Button";
 
 class Countdown extends Component {
@@ -88,6 +90,12 @@ class Countdown extends Component {
       }
     }
   };
+
+  componentDidUpdate(timerOn) {
+    const uid = firebase.auth().currentUser?.uid;
+    const db = firebase.firestore();
+    db.collection("/history").doc(uid).set({ history: this.props.histories });
+  }
 
   render() {
     const { timerTime, timerStart, timerOn } = this.state;
