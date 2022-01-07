@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core"
+import { Button } from "@material-ui/core";
 //import './App.css';
 import {
   FirebaseAuthConsumer,
@@ -16,17 +16,16 @@ function App() {
   return (
     <div>
       <FirebaseAuthConsumer>
-        <IfFirebaseAuthed>
-        </IfFirebaseAuthed>
+        <IfFirebaseAuthed></IfFirebaseAuthed>
         <IfFirebaseUnAuthed>
-            {({ firebase }) => (
-              <Button
-                variant="outlined"
-                onClick={() => handleGoogleSignIn(firebase)}
-              >
-                Sign in with Google
-              </Button>
-            )}
+          {({ firebase }) => (
+            <Button
+              variant="outlined"
+              onClick={() => handleGoogleSignIn(firebase)}
+            >
+              Sign in with Google
+            </Button>
+          )}
         </IfFirebaseUnAuthed>
       </FirebaseAuthConsumer>
     </div>
