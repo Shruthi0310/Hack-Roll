@@ -11,3 +11,8 @@ A chrome extension that blocks websites as specified by the user for a period of
 
 <img width="1430" alt="Screenshot 2022-01-08 at 11 20 10 AM" src="https://user-images.githubusercontent.com/60269914/148629985-8b47604f-e51c-4ea0-900f-6774aab8d501.png">
 
+4. Trying to cheat? nah
+
+<img width="1433" alt="Screenshot 2022-01-08 at 11 39 28 AM" src="https://user-images.githubusercontent.com/60269914/148630307-8176c857-83d1-4b14-9be7-b0541ce4500f.png">
+
+
