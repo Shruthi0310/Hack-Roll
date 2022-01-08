@@ -16,3 +16,4 @@ A chrome extension that blocks websites as specified by the user for a period of
 <img width="1433" alt="Screenshot 2022-01-08 at 11 39 28 AM" src="https://user-images.githubusercontent.com/60269914/148630307-8176c857-83d1-4b14-9be7-b0541ce4500f.png">
 
 
+followed this cool dudes tutorial to build the timer: https://github.com/peterdurham/timers-demo
